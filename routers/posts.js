@@ -1,5 +1,5 @@
 const express = require('express')
-const posts= require('../posts.js')
+const posts = require('../posts.js')
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -7,7 +7,13 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  res.send(`Dettagli del post ${req.params.id}`)
+  const postId = parseInt(req.params.id);
+  const post = posts.find(elem => elem.id === postId);
+  if (post) {
+    res.json(post);
+  } else {
+    res.send('Post non trovato');
+  }
 })
 
 router.post('/', (req, res) => {
